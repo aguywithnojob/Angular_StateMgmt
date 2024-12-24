@@ -1,0 +1,10 @@
+<div ngClass="container">
+    <h2>Todo List</h2>
+    <ul ngClass="todo-list">
+      <li ngClass="todo-item" *ngFor="let todo of toDoList$ | async ">
+        <span ngClass="todo-title" id="todo1">{{todo.title}}</span>
+        <input type="checkbox" (change)="toggleCompleted(todo)" [checked]="todo.completed" [disabled]="todo.completed"/>
+        <span [ngClass]="{ 'badge': true, 'completed':todo.completed, 'pending':!todo.completed }">{{ todo.completed ? 'Complete' : 'Pending' }}</span>
+      </li>
+    </ul>
+</div>
