@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { TodoService } from '../todo.service';
 import { ToDo,ToDoList } from '../todo.model';
 import { select, Store } from '@ngrx/store';
-import { showTodos } from '../state/todo.selector';
+import { showTodos, countOfTodos } from '../state/todo.selector';
 import { Observable } from 'rxjs';
-import { UpdateToDoState } from '../state/todo.action';
+import {  UpdateToDoState } from '../state/todo.action';
 
 
 @Component({
@@ -13,13 +13,15 @@ import { UpdateToDoState } from '../state/todo.action';
   styleUrls: ['./todo-list.component.scss']
 })
 export class TodoListComponent implements OnInit {
-  // public toDoList: ToDo[] = [];
+  @Output() sendUpdateTodo = new EventEmitter();
+
   public toDoList$: Observable<ToDo[]>;
+  public _todoListCount: number = 0;
   constructor(private _TodoService:TodoService, private _store: Store) { 
-    // this._store.pipe(select(showTodos)).subscribe((todos) => {
-    //   this.toDoList = todos;
-    // });
     this.toDoList$ = this._store.pipe(select(showTodos))
+    this._store.pipe(select(countOfTodos)).subscribe((count) => {
+      this._todoListCount = count;
+    })
   }
 
   ngOnInit(): void {
@@ -27,5 +29,10 @@ export class TodoListComponent implements OnInit {
   public toggleCompleted(todo: ToDo): void {
     // call update Reducer to update the todo
     this._store.dispatch(UpdateToDoState({id:todo.id, updatedTodo:{title:todo.title, completed:!todo.completed}}));
+  }
+  public _onUpdateClick($event: ToDo): void {
+    // emit this event
+    this.sendUpdateTodo.emit($event);
+
   }
 }

@@ -1,10 +1,25 @@
-<div ngClass="container">
+<div ngClass="container" *ngIf="_todoListCount > 0"> 
     <h2>Todo List</h2>
-    <ul ngClass="todo-list">
-      <li ngClass="todo-item" *ngFor="let todo of toDoList$ | async ">
-        <span ngClass="todo-title" id="todo1">{{todo.title}}</span>
-        <input type="checkbox" (change)="toggleCompleted(todo)" [checked]="todo.completed" [disabled]="todo.completed"/>
-        <span [ngClass]="{ 'badge': true, 'completed':todo.completed, 'pending':!todo.completed }">{{ todo.completed ? 'Complete' : 'Pending' }}</span>
-      </li>
-    </ul>
+    <table ngClass="table">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Title</th>
+          <th>Action</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tr *ngFor="let todo of toDoList$ | async">
+          <th scope="row" (click)=_onUpdateClick(todo)>{{todo.id}}</th>
+            <td>
+              <span ngClass="todo-title" id="todo1">{{todo.title}}</span>
+            </td>
+            <td>
+              <input type="checkbox" (change)="toggleCompleted(todo)" [checked]="todo.completed" [disabled]="todo.completed" />
+            </td>
+            <td>
+              <span [ngClass]="{ 'badge': true, 'completed':todo.completed, 'pending':!todo.completed }">{{ todo.completed ? 'Complete' : 'Pending' }}</span>
+            </td>
+      </tr>
+    </table>
 </div>

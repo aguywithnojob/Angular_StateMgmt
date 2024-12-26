@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-dashboard-stats',
@@ -7,9 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardStatsComponent implements OnInit {
 
+  @Input() public showDashboardData: any;
   constructor() { }
 
   ngOnInit(): void {
+    console.log('ngoninti >>> ', this.showDashboardData)
   }
 
 }

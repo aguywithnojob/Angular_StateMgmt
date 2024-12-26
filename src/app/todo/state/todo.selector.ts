@@ -6,3 +6,8 @@ export const showTodos = createSelector(
     createFeatureSelector('AddToDoReducer'),
     (state: ToDoList) => state.todos
 )
+
+export const countOfTodos = createSelector(
+    createFeatureSelector('AddToDoReducer'),
+    (state: ToDoList) => state.todos.length
+)

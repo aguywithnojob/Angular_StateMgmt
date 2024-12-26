@@ -1,12 +1,41 @@
-<div ngClass="d-flex justify-content-center">
-    <h4 ngClass="h-font h-color h-margin h-padd"> Todo Add </h4>
-    <div ngClass="container w-50">
-        <div ngClass=" my-2">
-            <input ngClass="form-control" type="text" placeholder="Enter Todo...." #todoInput>
+<div ngClass="container" *ngIf="!shouldUpdate">
+    <div ngClass="">
+        <h4 ngClass="h-font h-color h-margin h-padd d-flex justify-content-center m-2"> Todo Add </h4>
+        <div ngClass="container w-50">
+            <div ngClass=" my-2">
+                <input ngClass="form-control" type="text" placeholder="Enter Todo...." #todoInput>
+            </div>
+            <span></span>
+            <div ngClass="">
+                <button ngClass="btn btn-primary" (click)="addTodo()">Add Todo</button>
+            </div>
         </div>
-        <span></span>
-        <div ngClass="">
-            <button ngClass="btn btn-primary" (click)="addTodo()">Add Todo</button>
+    </div>  
+</div>
+
+<div ngClass="container" *ngIf="shouldUpdate">
+    <div ngClass="">
+        <h4 ngClass="h-font h-color h-margin h-padd d-flex justify-content-center m-2"> Todo Update </h4>
+        <div ngClass="container w-50">
+            <div ngClass=" my-2">
+                <input ngClass="form-control" type="text" placeholder="Enter Todo...." #todoUpdateInput [value]="_todo.title">
+            </div>
+            <span></span>
+            <div ngClass="">
+                <label>Status:</label>
+                <span></span>
+                <input type="checkbox" (change)="toggleCompleted(_todo)" [checked]="_todo.completed" />
+            </div>
+            <div ngClass="row">
+                <div ngClass="col-md-4">
+                    <button ngClass="btn btn-primary" (click)="updateTodo(_todo)">Update Todo</button>
+                </div>
+                <div ngClass="col-md-4">
+                    <button ngClass="btn btn-danger" (click)="showUpdator(false)">Back</button>
+                </div>
+            </div>   
         </div>
     </div>
 </div>
+
+<app-todo-list (sendUpdateTodo)="UpdateTodoRecord($event)"></app-todo-list>

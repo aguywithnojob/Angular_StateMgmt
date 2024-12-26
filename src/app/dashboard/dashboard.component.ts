@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component,  OnInit } from '@angular/core';
+import { Store, select } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { showTodos } from '../todo/state/todo.selector';
+import { ToDo } from '../todo/todo.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,7 +11,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() { }
+  public showDashboard : any = {};
+  constructor(private _store: Store) { 
+    this._store.pipe(select(showTodos)).subscribe((todos)=>{
+      this.showDashboard = {
+        todoCounts:todos.length,
+        completedTodos:todos.filter((todo:ToDo) => todo.completed).length,
+        pendingTodos:todos.filter((todo:ToDo) => !todo.completed).length
+      }
+    })
+  }
 
   ngOnInit(): void {
   }

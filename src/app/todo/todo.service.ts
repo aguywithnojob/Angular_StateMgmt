@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
 import { AddToDo, ToDo } from './todo.model';
 import { select, Store } from '@ngrx/store';
-import { AddToDoState } from './state/todo.action';
+import { AddToDoState, UpdateToDoState } from './state/todo.action';
 import { showTodos } from './state/todo.selector';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TodoService {
-  private _todos: ToDo[] = [];
-
+  
   constructor(private _store: Store) {}
 
   // Get the current list of todos
@@ -21,8 +20,13 @@ export class TodoService {
   // }
 
   // Add a new todo to the list
-  addTodo(newTodo: AddToDo) {
+  public addTodo(newTodo: AddToDo) {
     // instead call the dispacth method
     this._store.dispatch(AddToDoState({newTodo}));
+  }
+
+  public updateTodoRecord(todo: ToDo) {
+    this._store.dispatch(UpdateToDoState({id:todo.id, updatedTodo:{title:todo.title, completed:todo.completed}}));
+
   }
 }

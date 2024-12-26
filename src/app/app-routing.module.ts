@@ -9,8 +9,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
 const routes: Routes = [
   {path:'', component: DashboardComponent, pathMatch: 'full'},
   {path:'add', component: TodoAddComponent, pathMatch: 'full'},
-  {path:'edit/:id', component: TodoAddComponent, pathMatch: 'full'},
-  {path:'list', component: TodoListComponent, pathMatch: 'full'},
+  // {path:'edit/:id', component: TodoAddComponent, pathMatch: 'full'},
+  // {path:'list', component: TodoListComponent, pathMatch: 'full'},
   {path:'dash/stats', component:DashboardStatsComponent, pathMatch: 'full'},
   {path:'dashboard', component:DashboardComponent, pathMatch: 'full'},
   {path:'**', component: NotFoundComponent}
